@@ -1,0 +1,12 @@
+# IntellJ .http 를 사용해 API 요청
+POST http://localhost:8080/posts
+Content-Type: application/json
+
+{
+  "title": "테스트타이틀2",
+  "content":"테스트본문2",
+  "author":"테스터"
+}
+
+###
+

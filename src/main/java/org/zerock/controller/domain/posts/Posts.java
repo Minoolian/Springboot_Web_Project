@@ -35,4 +35,6 @@ public class Posts extends BaseTimeEntity {
         this.author=author;
     }
 
+
+
 }

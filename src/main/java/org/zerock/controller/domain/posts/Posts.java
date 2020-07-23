@@ -6,10 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.zerock.controller.domain.BaseTimeEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -17,7 +14,8 @@ import javax.persistence.Id;
 public class Posts extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    // 스프링부트 2.x 이상부터 auto_increment 적용이 되지않기에 option 추가
     private Long id;
 
     @Column(length = 500, nullable = false)

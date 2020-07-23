@@ -3,7 +3,12 @@ spring:
     url: jdbc:h2:mem:testdb
     driver-class-name: org.h2.Driver
     username: sa
-    password: 
+    password:
+    data: classpath:data-h2.sql
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
   h2:
     console:
       enabled: true

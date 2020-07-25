@@ -34,5 +34,8 @@ dependencies {
 }
 
 test {
+	testLogging{
+		exceptionFormat='full' // 테스트 시 적절한 로그출력
+	}
 	useJUnitPlatform()
 }

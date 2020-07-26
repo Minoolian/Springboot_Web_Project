@@ -13,9 +13,10 @@ import org.zerock.controller.domain.posts.PostsRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -29,7 +30,7 @@ public class PostsRepositoryTests {
         postsRepository.deleteAll(); // 테스트 이후 repo 전체를 비운다.
     }
 
-    @Test
+
     public void 게시글저장_불러오기(){
 
         //given : 테스트 기반환경 구축
@@ -63,7 +64,7 @@ public class PostsRepositoryTests {
         List<Posts> postsList = postsRepository.findAll();
 
         //then
-        Posts posts=postsList.get(0);
+        Posts posts=postsList.get(0); // 테스트가 여럿일 경우 gradlew 시 게시글 번호를 주의
         assertTrue(posts.getCreateDate().isAfter(now));
         assertTrue(posts.getModifiedDate().isAfter(now));
     }

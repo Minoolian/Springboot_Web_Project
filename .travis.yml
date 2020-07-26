@@ -13,7 +13,7 @@ cache:
 
 script: "./gradlew clean build"
 
-// 권한 추가를 위한 설정
+# 권한 추가를 위한 설정
 before_install: 
   - chmod +x gradlew 
 

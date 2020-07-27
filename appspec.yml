@@ -4,7 +4,14 @@ files:
   - source:  /
     destination: /home/tuser/app/travis/build/
 
+permissions:
+  - object:  /
+    pattern: "**"
+    owner: tuser
+    group: tuser
+
 hooks:
   AfterInstall:
     - location: execute-deploy.sh
       timeout: 180
+      runas: tuser

@@ -37,6 +37,20 @@ deploy:
       repo: Minoolian/Springboot_Web_Project
       branch: master
 
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: spring-webservice-deployment
+    key: springboot-webservice.zip
+    bundle_type: zip
+    application: spring-webservice
+    deployment_group: spring-webservice-group
+    region: ap-northeast-2
+    wait-until-deployed: true
+    on:
+      repo: Minoolian/Springboot_Web_Project
+      branch: master
+
 notifications:
   email:
     recipients:

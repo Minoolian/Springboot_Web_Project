@@ -15,7 +15,27 @@ script: "./gradlew clean build"
 
 # 권한 추가를 위한 설정
 before_install: 
-  - chmod +x gradlew 
+  - chmod +x gradlew
+
+before_deploy:
+  - zip -r springboot-webservice *
+  - mkdir -p deploy
+  - mv springboot-webservice.zip deploy/springboot-webservice.zip
+
+
+deploy:
+  - provider: s3
+    local_dir: deploy
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: spring-webservice-deployment
+    region: ap-northeast-2
+    skip_cleanup: true
+    acl: public_read
+    wait-until-deployed: true
+    on:
+      repo: Minoolian/Springboot_Web_Project
+      branch: master
 
 notifications:
   email:

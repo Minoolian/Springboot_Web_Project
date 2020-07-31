@@ -1,6 +1,10 @@
 spring:
   profiles:
     active: local #기본환경
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 
 ---
 spring:
@@ -10,7 +14,7 @@ spring:
     driver-class-name: org.h2.Driver
     username: sa
     password:
-#    data: classpath:data-h2.sql
+    #data: classpath:data-h2.sql
   jpa:
     show-sql: true
     hibernate:

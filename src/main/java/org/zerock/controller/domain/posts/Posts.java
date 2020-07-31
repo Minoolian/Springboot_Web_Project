@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class Posts extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     // 스프링부트 2.x 이상부터 auto_increment 적용이 되지않기에 option 추가
     private Long id;
 

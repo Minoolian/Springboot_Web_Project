@@ -1,15 +1,18 @@
-# Test
-spring:
-  profiles:
-    active: local
-#  jpa:
-#    properties:
-#      hibernate:
-#        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-
-# local
 ---
 spring:
-  profiles: local
+  datasource: # 계정정보를 명시해주어야 접속이 가능하다.
+    driver-class-name: org.h2.Driver
+    password: ~
+    url: "jdbc:h2:mem:testdb"
+    username: sa
+  h2:
+    console:
+      enabled: true
   jpa:
+    #database-platform: org.hibernate.dialect.MariaDBDialect
+    hibernate:
+      ddl-auto: create-drop
+      #dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+      #dialect: org.hibernate.dialect.MariaDBDialect
     show-sql: true
+

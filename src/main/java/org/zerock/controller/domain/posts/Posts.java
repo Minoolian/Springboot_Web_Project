@@ -34,5 +34,4 @@ public class Posts extends BaseTimeEntity {
     }
 
 
-
 }

@@ -1,17 +1,16 @@
 package org.zerock.controller.domain.board;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 import org.zerock.controller.domain.BaseTimeEntity;
 
 import javax.persistence.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter
+@Data
 @Entity
 @Table(name = "tbl_board")
+@DynamicUpdate
 public class Board extends BaseTimeEntity {
 
     @Id

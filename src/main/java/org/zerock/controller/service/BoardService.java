@@ -2,6 +2,7 @@ package org.zerock.controller.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.zerock.controller.domain.board.Board;
 import org.zerock.controller.domain.board.BoardRepository;
 
@@ -35,6 +36,7 @@ public class BoardService {
         return board;
     }
 
+    @Transactional
     public void updateByTitle(Long bno, Board board){
         Optional<Board> e = boardRepository.findById(bno);
 
@@ -44,7 +46,7 @@ public class BoardService {
                     .content(board.getContent())
                     .title(board.getTitle())
                     .build();
-            boardRepository.save(board);
+            //e.get().setTitle(board.getTitle());
         }
     }
 }

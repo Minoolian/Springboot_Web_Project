@@ -43,7 +43,7 @@ public class BoardRestController {
 
     @PutMapping(value = "/{bno}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Board> updateBoard(@PathVariable("bno") Long bno, Board board){
-        boardService.updateByTitle(bno,board);
+        boardService.updateBoard(bno,board);
         return new ResponseEntity<>(board,HttpStatus.OK);
     }
 

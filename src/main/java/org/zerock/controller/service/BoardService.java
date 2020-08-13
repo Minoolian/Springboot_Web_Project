@@ -37,16 +37,11 @@ public class BoardService {
     }
 
     @Transactional
-    public void updateByTitle(Long bno, Board board){
+    public void updateBoard(Long bno, Board board){
         Optional<Board> e = boardRepository.findById(bno);
 
         if(e.isPresent()){
-            e.get().builder()
-                    .writer(board.getWriter())
-                    .content(board.getContent())
-                    .title(board.getTitle())
-                    .build();
-            //e.get().setTitle(board.getTitle());
+            e.get().updateBoard(board);
         }
     }
 }

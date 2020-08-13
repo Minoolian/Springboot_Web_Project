@@ -7,7 +7,7 @@ import org.zerock.controller.domain.BaseTimeEntity;
 import javax.persistence.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Data
+@Getter
 @Entity
 @Table(name = "tbl_board")
 @DynamicUpdate
@@ -30,6 +30,11 @@ public class Board extends BaseTimeEntity {
         this.title=title;
         this.content=content;
         this.writer=writer;
+    }
+
+    public void updateBoard(Board board){
+        this.title=board.getTitle();
+        this.content=board.getContent();
     }
 
 }

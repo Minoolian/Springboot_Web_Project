@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 
 @RunWith(SpringRunner.class)
@@ -61,8 +61,40 @@ public class BoardRepositoryTests {
 
         assertThat(board.get().getTitle(),is(e.getTitle()));
         assertThat(board.get().getContent(),is(e.getContent()));
+    }
 
+    @Test
+    public void BoardDeleteTest(){
+        boardRepository.save(Board.builder()
+                .title("테스트게시글")
+                .content("테스트본문")
+                .writer("minoolian")
+                .build());
 
+        Optional<Board> board = boardRepository.findById(1L);
+        assertTrue(board.isPresent());
+        board.ifPresent(selectBoard->{
+            boardRepository.deleteById(selectBoard.getBno());
+        });
 
+        Optional<Board> deleteboard = boardRepository.findById(1L);
+
+        assertFalse(deleteboard.isPresent());
+
+    }
+
+    @Test
+    public void BoardFindTest(){
+        boardRepository.save(Board.builder()
+                .title("테스트게시글")
+                .content("테스트본문")
+                .writer("minoolian")
+                .build());
+
+        Optional<Board> board = boardRepository.findById(1L);
+
+        board.ifPresent(selectBoard->{
+            System.out.println("board: "+ selectBoard);
+        });
     }
 }

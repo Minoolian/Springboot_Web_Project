@@ -22,16 +22,16 @@ public class BoardService {
         return boards;
     }
 
-    public Optional<Board> findByTitle(Long bno){
+    public Optional<Board> findBoard(Long bno){
         Optional<Board> board = boardRepository.findById(bno);
         return board;
     }
 
-    public void deleteByTitle(Long bno){
+    public void deleteBoard(Long bno){
         boardRepository.deleteById(bno);
     }
 
-    public Board save(Board board){
+    public Board saveBoard(Board board){
         boardRepository.save(board);
         return board;
     }

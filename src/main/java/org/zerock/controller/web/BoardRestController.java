@@ -31,13 +31,13 @@ public class BoardRestController {
 
     @GetMapping(value = "/{bno}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Board> getTitle(@PathVariable("bno") Long bno){
-        Optional<Board> board = boardService.findByTitle(bno);
+        Optional<Board> board = boardService.findBoard(bno);
         return new ResponseEntity<>(board.get(), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{bno}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Void> deleteTitle(@PathVariable("bno") Long bno){
-        boardService.deleteByTitle(bno);
+        boardService.deleteBoard(bno);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
@@ -49,12 +49,12 @@ public class BoardRestController {
 
     @PostMapping
     public ResponseEntity<Board> save(Board board){
-        return new ResponseEntity<>(boardService.save(board),HttpStatus.OK);
+        return new ResponseEntity<>(boardService.saveBoard(board),HttpStatus.OK);
     }
 
     @RequestMapping(value = "/saveBoard", method = RequestMethod.GET)
     public ResponseEntity<Board> save(HttpServletRequest req, Board board){
-        return new ResponseEntity<>(boardService.save(board), HttpStatus.OK);
+        return new ResponseEntity<>(boardService.saveBoard(board), HttpStatus.OK);
     }
 
     

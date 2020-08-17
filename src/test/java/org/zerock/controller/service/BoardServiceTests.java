@@ -12,6 +12,8 @@ import org.zerock.controller.domain.board.BoardRepository;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -26,6 +28,25 @@ public class BoardServiceTests {
     @After
     public void cleanUp(){
         boardRepository.deleteAll();
+    }
+
+    @Test
+    public void RegisterTest(){
+
+        Board e = boardRepository.save(
+                Board.builder()
+                        .title("Test Title")
+                        .content("Test Content")
+                        .writer("Test Writer")
+                        .build()
+        );
+
+        assertEquals("Test Title",e.getTitle());
+        assertEquals("Test Content",e.getContent());
+        assertEquals("Test Writer",e.getWriter());
+        assertNotNull(e.getCreateDate());
+
+
     }
 
     @Test

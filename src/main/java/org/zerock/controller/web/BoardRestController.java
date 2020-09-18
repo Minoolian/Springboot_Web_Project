@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/tempboard")
+@RequestMapping("/board")
 public class BoardRestController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());

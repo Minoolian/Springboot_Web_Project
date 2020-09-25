@@ -12,9 +12,14 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.zerock.controller.service.BoardService;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
+@
 public class BoardControllerTests {
 
     @Autowired
@@ -23,6 +28,7 @@ public class BoardControllerTests {
     @Autowired
     private WebApplicationContext ctx;
 
+    @Autowired
     private MockMvc mockMvc;
 
     @Before
@@ -33,6 +39,14 @@ public class BoardControllerTests {
 
     @Test
     public void testList() throws Exception{
+
+        log.info("=============MVC TEST START=====================");
+
+        mockMvc.perform(get("/board/list"))
+                .andDo(print());
+
+        log.info("=============MVC TEST END=====================");
+
 
     }
 

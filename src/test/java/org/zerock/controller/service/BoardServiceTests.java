@@ -41,13 +41,16 @@ public class BoardServiceTests {
                         .build()
         );
 
-        assertEquals("Test Title",e.getTitle());
-        assertEquals("Test Content",e.getContent());
-        assertEquals("Test Writer",e.getWriter());
+        Optional <Board> a=boardRepository.findById(1L);
+
+        assertEquals("Test Title",a.get().getTitle());
+        assertEquals("Test Content",a.get().getContent());
+        assertEquals("Test Writer",a.get().getWriter());
         assertNotNull(e.getCreateDate());
 
 
     }
+
 
     @Test
     public void UpdateTest(){

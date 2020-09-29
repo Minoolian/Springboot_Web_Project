@@ -1,5 +1,6 @@
 package org.zerock.controller.domain;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Slf4j
 public class BoardRepositoryTests {
 
     @Autowired
@@ -33,7 +35,6 @@ public class BoardRepositoryTests {
 
         //when : 테스트할 행위위
         List<Board> boardList = boardRepository.findAll();
-
 
         //then : 테스트 결과 검증
         Board board = boardList.get(0);
@@ -93,8 +94,9 @@ public class BoardRepositoryTests {
 
         Optional<Board> board = boardRepository.findById(1L);
 
-        board.ifPresent(selectBoard->{
-            System.out.println("board: "+ selectBoard);
-        });
+        board.ifPresent(selectboard->{
+            log.info("board: "+ selectboard);
+                }
+        );
     }
 }

@@ -86,17 +86,30 @@ public class BoardRepositoryTests {
 
     @Test
     public void BoardFindTest(){
-        boardRepository.save(Board.builder()
+        Board ex_board=Board.builder()
                 .title("테스트게시글")
                 .content("테스트본문")
                 .writer("minoolian")
-                .build());
+                .build();
+
+        boardRepository.save(ex_board);
 
         Optional<Board> board = boardRepository.findById(1L);
 
         board.ifPresent(selectboard->{
-            log.info("board: "+ selectboard);
+            assertThat(selectboard.getBno(), is(ex_board.getBno()));
                 }
         );
+    }
+
+    @Test
+    public void BoardFindAllTest(){
+        boardRepository.save(
+                Board.builder()
+                        .title("테스트게시글")
+                        .content("테스트본문")
+                        .writer("minoolian")
+                        .build();
+        )
     }
 }

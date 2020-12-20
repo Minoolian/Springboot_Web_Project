@@ -1,11 +1,13 @@
 package org.zerock.controller.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 import org.zerock.controller.domain.board.Board;
 import org.zerock.controller.domain.board.BoardRepository;
 
@@ -17,6 +19,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Transactional
+@Slf4j
 public class BoardServiceTests {
 
     @Autowired
@@ -31,7 +35,7 @@ public class BoardServiceTests {
     }
 
     @Test
-    public void RegisterTest(){
+    public void registerTest(){
 
         Board e = boardRepository.save(
                 Board.builder()
@@ -53,7 +57,7 @@ public class BoardServiceTests {
 
 
     @Test
-    public void UpdateTest(){
+    public void updateTest(){
 
         boardRepository.save(
                 Board.builder()
@@ -73,5 +77,19 @@ public class BoardServiceTests {
         boardService.updateBoard(1L, updateBoard);
         assertThat(e.get().getTitle()).isEqualTo(updateBoard.getTitle());
         assertThat(e.get().getContent()).isEqualTo(updateBoard.getContent());
+    }
+
+    @Test
+    public void deleteTest(){
+
+        boardRepository.save(
+                Board.builder()
+                        .title("Test Title")
+                        .content("Test Content")
+                        .writer("Test Writer")
+                        .build()
+        );
+        
+        assertThat(boardRepository.deleteByBno(1L)).isEqualTo(1);
     }
 }

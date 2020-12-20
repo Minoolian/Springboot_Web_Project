@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.zerock.controller.domain.board.Board;
 import org.zerock.controller.domain.board.BoardRepository;
@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
 
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@DataJpaTest
 @Slf4j
 public class BoardRepositoryTests {
 
@@ -109,7 +109,12 @@ public class BoardRepositoryTests {
                         .title("테스트게시글")
                         .content("테스트본문")
                         .writer("minoolian")
-                        .build();
-        )
+                        .build()
+        );
+
+        List<Board> board=boardRepository.findAll();
+
+        board.forEach(a-> log.info("result="+a));
+
     }
 }

@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.zerock.controller.domain.board.Board;
 import org.zerock.controller.domain.board.BoardRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,18 +16,16 @@ public class BoardService {
     private BoardRepository boardRepository;
 
     public List<Board> findAll(){
-        List<Board> boards = new ArrayList<>();
-        boardRepository.findAll().forEach(a->boards.add(a));
-        return boards;
+        return boardRepository.findAll();
     }
 
     public Optional<Board> findBoard(Long bno){
-        Optional<Board> board = boardRepository.findById(bno);
-        return board;
+        return boardRepository.findById(bno);
     }
 
-    public void deleteBoard(Long bno){
-        boardRepository.deleteById(bno);
+    public Long deleteBoard(Long bno){
+
+        return boardRepository.deleteByBno(bno);
     }
 
     public Board saveBoard(Board board){

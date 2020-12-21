@@ -38,7 +38,9 @@ public class BoardService {
         Optional<Board> e = boardRepository.findById(bno);
 
         if(e.isPresent()){
-            e.get().updateBoard(board);
+            e.get().setTitle(board.getTitle());
+            e.get().setContent(board.getContent());
+            e.get().setWriter(board.getWriter());
         }
     }
 }

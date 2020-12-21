@@ -42,27 +42,6 @@ public class BoardRepositoryTests {
         assertThat(board.getContent(), is("테스트본문"));
     }
 
-    @Test
-    public void BoardUpdateTest(){
-        boardRepository.save(Board.builder()
-                .title("테스트게시글")
-                .content("테스트본문")
-                .writer("minoolian")
-                .build());
-
-        Board e=Board.builder()
-                .title("modified Title")
-                .content("modified Content")
-                .build();
-
-        Optional<Board> board = boardRepository.findById(1L);
-        if(board.isPresent()){
-            board.get().updateBoard(e);
-        }
-
-        assertThat(board.get().getTitle(),is(e.getTitle()));
-        assertThat(board.get().getContent(),is(e.getContent()));
-    }
 
     @Test
     public void BoardDeleteTest(){

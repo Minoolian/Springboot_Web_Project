@@ -11,17 +11,17 @@ import org.springframework.transaction.annotation.Transactional;
 import org.zerock.controller.domain.board.Board;
 import org.zerock.controller.domain.board.BoardRepository;
 
-import java.util.Optional;
+import javax.persistence.EntityManager;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
 @Slf4j
 public class BoardServiceTests {
+    @Autowired
+    private EntityManager entityManager;
 
     @Autowired
     private BoardService boardService;
@@ -29,15 +29,20 @@ public class BoardServiceTests {
     @Autowired
     private BoardRepository boardRepository;
 
+
     @After
-    public void cleanUp(){
-        boardRepository.deleteAll();
+    // auto increment로 인한 통합테스트 실패해결 방법 (reset)
+    public void teardown() {
+        this.boardRepository.deleteAll();
+        this.entityManager
+                .createNativeQuery("ALTER TABLE tbl_board ALTER COLUMN bno RESTART                                                                     WITH 1")
+                .executeUpdate();
     }
 
     @Test
     public void registerTest(){
 
-        Board e = boardRepository.save(
+        Board e = boardService.saveBoard(
                 Board.builder()
                         .title("Test Title")
                         .content("Test Content")
@@ -45,21 +50,15 @@ public class BoardServiceTests {
                         .build()
         );
 
-        Optional <Board> a=boardRepository.findById(1L);
-
-        assertEquals("Test Title",a.get().getTitle());
-        assertEquals("Test Content",a.get().getContent());
-        assertEquals("Test Writer",a.get().getWriter());
-        assertNotNull(e.getCreateDate());
-
+        assertThat(e.getTitle()).isEqualTo("Test Title");
+        log.info("Bno : "+e.getBno());
 
     }
-
 
     @Test
     public void updateTest(){
 
-        boardRepository.save(
+        boardService.saveBoard(
                 Board.builder()
                 .title("Test Title")
                 .content("Test Content")
@@ -72,24 +71,22 @@ public class BoardServiceTests {
                 .content("Modified Content")
                 .build();
 
-        Optional <Board> e=boardRepository.findById(1L);
-
         boardService.updateBoard(1L, updateBoard);
-        assertThat(e.get().getTitle()).isEqualTo(updateBoard.getTitle());
-        assertThat(e.get().getContent()).isEqualTo(updateBoard.getContent());
+        assertThat(boardService.findBoard(1L).get().getTitle()).isEqualTo(updateBoard.getTitle());
+        assertThat(boardService.findBoard(1L).get().getContent()).isEqualTo(updateBoard.getContent());
     }
 
     @Test
     public void deleteTest(){
 
-        boardRepository.save(
+        boardService.saveBoard(
                 Board.builder()
                         .title("Test Title")
                         .content("Test Content")
                         .writer("Test Writer")
                         .build()
         );
-        
-        assertThat(boardRepository.deleteByBno(1L)).isEqualTo(1);
+
+        assertThat(boardService.deleteBoard(1L)).isEqualTo(1);
     }
 }

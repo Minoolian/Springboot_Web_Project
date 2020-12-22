@@ -8,16 +8,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.zerock.controller.service.BoardService;
 
 @Controller
-@RequestMapping("/board/*")
+@RequestMapping("/board")
 @AllArgsConstructor
 public class BoardController {
 
     private BoardService boardService;
 
     @GetMapping("/list")
-    public void list(Model model){
+    public String list(Model model){
 
         model.addAttribute("list", boardService.findAll());
-
+        return "board";
     }
 }

@@ -34,8 +34,8 @@ public class BoardService {
     }
 
     @Transactional
-    public void updateBoard(Long bno, Board board){
-        Optional<Board> e = boardRepository.findById(bno);
+    public void updateBoard(Board board){
+        Optional<Board> e = boardRepository.findById(board.getBno());
 
         if(e.isPresent()){
             e.get().setTitle(board.getTitle());

@@ -34,11 +34,11 @@ public class BoardController {
         model.addAttribute("board", boardService.findBoard(bno));
     }
 
-    /*@PostMapping("/modify")
+    @PostMapping("/modify")
     public String modify(Board board) {
         boardService.updateBoard(board);
         return "redirect:/board/list";
-    }*/
+    }
 
     @PostMapping("/remove")
     public String remove(@RequestParam("bno") Long bno) {

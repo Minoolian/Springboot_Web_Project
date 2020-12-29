@@ -26,8 +26,7 @@ public class Board extends BaseTimeEntity {
     private String writer;
 
     @Builder
-    public Board(Long bno,String title, String content, String writer){
-        this.bno=bno;
+    public Board(String title, String content, String writer){
         this.title=title;
         this.content=content;
         this.writer=writer;

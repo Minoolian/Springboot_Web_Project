@@ -15,6 +15,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.zerock.controller.service.BoardService;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -84,5 +85,27 @@ public class BoardControllerTests {
 //                .andDo(print());
 //
 //    }
+
+    @Test
+    public void registerTest() throws Exception {
+//        Board board = boardService.saveBoard(
+//                Board.builder()
+//                        .bno(1L)
+//                .writer("test writer")
+//                .content("test content")
+//                .title("test title1")
+//                .build()
+//        );
+
+        mockMvc.perform(post("/board/register")
+                .param("title", "test title")
+                .param("writer","test writer")
+                .param("content", "test content")
+
+        )
+                .andExpect(status().is3xxRedirection())
+                // Redirection 되므로 302 error 예상
+                .andDo(print());
+    }
 
 }

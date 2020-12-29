@@ -67,7 +67,6 @@ public class BoardServiceTests {
         );
 
         Board updateBoard= Board.builder()
-                .bno(1L)
                 .title("Modified Title")
                 .content("Modified Content")
                 .build();

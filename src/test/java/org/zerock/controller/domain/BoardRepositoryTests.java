@@ -45,21 +45,29 @@ public class BoardRepositoryTests {
 
     @Test
     public void BoardDeleteTest(){
-        boardRepository.save(Board.builder()
-                .title("테스트게시글")
-                .content("테스트본문")
-                .writer("minoolian")
-                .build());
+        int[] a={1, 2, 3, 4, 5};
+        for(int v:a) {
+            boardRepository.save(Board.builder()
+                    .title("테스트게시글" + v)
+                    .content("테스트본문")
+                    .writer("minoolian")
+                    .build());
+        }
 
-        Optional<Board> board = boardRepository.findById(1L);
-        assertTrue(board.isPresent());
-        board.ifPresent(selectBoard->{
-            boardRepository.deleteById(selectBoard.getBno());
-        });
+        assertThat(boardRepository.deleteByBno(4L), is("2L"));
 
-        Optional<Board> deleteboard = boardRepository.findById(1L);
 
-        assertFalse(deleteboard.isPresent());
+
+
+//        Optional<Board> board = boardRepository.findById(1L);
+//        assertTrue(board.isPresent());
+//        board.ifPresent(selectBoard->{
+//            boardRepository.deleteById(selectBoard.getBno());
+//        });
+//
+//        Optional<Board> deleteboard = boardRepository.findById(1L);
+//
+//        assertFalse(deleteboard.isPresent());
 
     }
 

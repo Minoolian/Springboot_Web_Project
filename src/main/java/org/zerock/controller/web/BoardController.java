@@ -30,8 +30,9 @@ public class BoardController {
     }
 
     @GetMapping("/get")
-    public void get(@RequestParam("bno") Long bno, Model model) {
+    public String get(@RequestParam("bno") Long bno, Model model) {
         model.addAttribute("board", boardService.findBoard(bno));
+        return "get";
     }
 
     @PostMapping("/modify")
@@ -42,7 +43,9 @@ public class BoardController {
 
     @PostMapping("/remove")
     public String remove(@RequestParam("bno") Long bno) {
-        boardService.deleteBoard(bno);
+        if (boardService.deleteBoard(bno)) {
+
+        }
         return "redirect:/board/list";
     }
 }

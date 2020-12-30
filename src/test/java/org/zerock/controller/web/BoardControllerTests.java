@@ -12,7 +12,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
+import org.zerock.controller.domain.board.Board;
 import org.zerock.controller.service.BoardService;
+
+import java.util.Optional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -106,6 +109,48 @@ public class BoardControllerTests {
                 .andExpect(status().is3xxRedirection())
                 // Redirection 되므로 302 error 예상
                 .andDo(print());
+    }
+
+    @Test
+    public void getTest() throws Exception {
+        boardService.saveBoard(
+                Board.builder()
+                .title("test title")
+                .content("test contetn")
+                .writer("test writer")
+                .build()
+        );
+
+        mockMvc.perform(get("/board/get")
+        .param("bno", "1"))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    public void modifyTest() throws Exception {
+
+    }
+
+    @Test
+    public void removeTest() throws Exception {
+        boardService.saveBoard(
+                Board.builder()
+                        .title("test title")
+                        .content("test content")
+                        .writer("test writer")
+                        .build()
+        );
+
+        Optional<Board> board = boardService.findBoard(1L);
+
+        if(board.isPresent()) {
+            mockMvc.perform(post("/board/remove")
+                    .param("bno", "1"))
+                    .andExpect(status().is3xxRedirection())
+                    .andDo(print());
+        }
+
     }
 
 }

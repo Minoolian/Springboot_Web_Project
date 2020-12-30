@@ -23,9 +23,9 @@ public class BoardService {
         return boardRepository.findById(bno);
     }
 
-    public Long deleteBoard(Long bno){
+    public boolean deleteBoard(Long bno){
 
-        return boardRepository.deleteByBno(bno);
+        return boardRepository.deleteByBno(bno)==1;
     }
 
     public Board saveBoard(Board board){

@@ -34,13 +34,18 @@ public class BoardService {
     }
 
     @Transactional
-    public void updateBoard(Board board){
+    public boolean updateBoard(Board board){
         Optional<Board> e = boardRepository.findById(board.getBno());
 
         if(e.isPresent()){
             e.get().setTitle(board.getTitle());
             e.get().setContent(board.getContent());
             e.get().setWriter(board.getWriter());
+
+            return true;
+        }else{
+            return false;
         }
+
     }
 }

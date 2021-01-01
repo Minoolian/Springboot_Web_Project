@@ -37,7 +37,9 @@ public class BoardController {
 
     @PostMapping("/modify")
     public String modify(Board board) {
-        boardService.updateBoard(board);
+        if (boardService.updateBoard(board)) {
+
+        }
         return "redirect:/board/list";
     }
 

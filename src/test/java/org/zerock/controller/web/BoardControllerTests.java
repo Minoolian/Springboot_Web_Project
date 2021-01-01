@@ -129,8 +129,22 @@ public class BoardControllerTests {
 
     @Test
     public void modifyTest() throws Exception {
+        boardService.saveBoard(
+                Board.builder()
+                        .title("test title")
+                        .content("test content")
+                        .writer("test writer")
+                        .build()
+        );
 
+        mockMvc.perform(post("/board/modify")
+                .param("bno", "1")
+                .param("title", "modifyTitle")
+        )
+                .andExpect(status().is3xxRedirection())
+                .andDo(print());
     }
+
 
     @Test
     public void removeTest() throws Exception {

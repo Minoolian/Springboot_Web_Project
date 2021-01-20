@@ -20,7 +20,7 @@ public class BoardController {
     @GetMapping("/list")
     public String list(Model model) {
         model.addAttribute("list", boardService.findAll());
-        return "tables";
+        return "list";
     }
 
     @PostMapping("/register")

@@ -29,6 +29,11 @@ public class BoardController {
         return "redirect:/board/list";
     }
 
+    @GetMapping("/register")
+    public String register(){
+        return "register";
+    }
+
     @GetMapping("/get")
     public String get(@RequestParam("bno") Long bno, Model model) {
         model.addAttribute("board", boardService.findBoard(bno));

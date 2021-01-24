@@ -11,6 +11,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.controller.domain.board.Board;
 import org.zerock.controller.service.BoardService;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/board")
 @AllArgsConstructor
@@ -38,7 +40,12 @@ public class BoardController {
 
     @GetMapping("/get")
     public String get(@RequestParam("bno") Long bno, Model model) {
-        model.addAttribute("board", boardService.findBoard(bno));
+        Optional<Board> board=boardService.findBoard(bno);
+
+        if(board.isPresent()){
+            model.addAttribute("board", board.get());
+        }
+
         return "get";
     }
 

@@ -1,6 +1,7 @@
 package org.zerock.controller.web;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,11 +12,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.controller.domain.board.Board;
 import org.zerock.controller.service.BoardService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 @Controller
 @RequestMapping("/board")
 @AllArgsConstructor
+@Slf4j
 public class BoardController {
 
     private BoardService boardService;
@@ -38,15 +41,24 @@ public class BoardController {
         return "register";
     }
 
-    @GetMapping("/get")
-    public String get(@RequestParam("bno") Long bno, Model model) {
+    @GetMapping({"/get", "/modify"})
+    public String get(@RequestParam("bno") Long bno, Model model, HttpServletRequest request) {
         Optional<Board> board=boardService.findBoard(bno);
 
         if(board.isPresent()){
             model.addAttribute("board", board.get());
         }
 
-        return "get";
+        String[] url=request.getRequestURI().split("/");
+        String param=url[url.length-1];
+
+        if(param.equals("get")){
+            return "get";
+        }else{
+            return "modify";
+        }
+
+
     }
 
     @PostMapping("/modify")

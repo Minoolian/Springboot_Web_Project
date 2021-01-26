@@ -378,8 +378,12 @@
                                 <div class="form-group">
                                     <label>Writer</label> <input class="form-control" name='writer' th:value="${board.writer}" readonly="readonly">
                                 </div>
-                                <button type="modify" class="btn btn-default" th:onclick="'location.href=\'/board/modify?bno='+${board.bno}+'\''">Modify</button>
-                                <button type="list" class="btn btn-info" onclick="location.href='/board/list'">List</button>
+                                <button data-oper="modify" class="btn btn-default" th:onclick="'location.href=\'/board/modify?bno='+${board.bno}+'\''">Modify</button>
+                                <button data-oper="list" class="btn btn-info" onclick="location.href='/board/list'">List</button>
+
+                            <form id="openForm" action="/board/modify" method="get">
+                                <input type="hidden" id="bno" name="bno" th:value="${board.bno}">
+                            </form>
 
                         </div>
                         <!-- /.panel-body -->
@@ -394,6 +398,27 @@
 
     </div>
     <!-- /#wrapper -->
+
+    <script th:inline="javascript">
+        /* <![CDATA[ */
+        $(document).ready(function (){
+
+            var openForm=$("#openForm");
+
+            $("button[data-oper='modify']").on("click",function(e){
+                openForm.attr("action", "/board/modify").submit();
+            });
+
+            $("button[data-oper='list']").on("click",function(e){
+                openForm.find("#bno").remove();
+                openForm.attr("action", "/board/list");
+                openForm.submit();
+            });
+
+        });
+
+        /* ]]> */
+    </script>
 </th:block>
 </body>
 </html>

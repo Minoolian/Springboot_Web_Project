@@ -11,7 +11,6 @@ import org.zerock.controller.domain.board.Board;
 import org.zerock.controller.service.BoardService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -23,11 +22,11 @@ public class BoardRestController {
 
     BoardService boardService;
 
-    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<List<Board>> getAllboards(){
-        List<Board> board = boardService.findAll();
-        return new ResponseEntity<>(board, HttpStatus.OK);
-    }
+//    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
+//    public ResponseEntity<List<Board>> getAllboards(){
+//        List<Board> board = boardService.findAll();
+//        return new ResponseEntity<>(board, HttpStatus.OK);
+//    }
 
     @GetMapping(value = "/{bno}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Board> getTitle(@PathVariable("bno") Long bno){

@@ -2,6 +2,9 @@ package org.zerock.controller.web;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,8 +27,8 @@ public class BoardController {
     private BoardService boardService;
 
     @GetMapping("/list")
-    public String list(Model model) {
-        model.addAttribute("list", boardService.findAll());
+    public String list(Model model, @PageableDefault(sort={"bno"}, direction = Sort.Direction.DESC, size=5) Pageable pageable) {
+        model.addAttribute("list", boardService.findAll(pageable));
         return "list";
     }
 

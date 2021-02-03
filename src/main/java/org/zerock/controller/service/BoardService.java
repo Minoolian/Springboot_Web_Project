@@ -2,11 +2,13 @@ package org.zerock.controller.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.zerock.controller.domain.board.Board;
 import org.zerock.controller.domain.board.BoardRepository;
+import org.zerock.controller.dto.board.Criteria;
 
 import java.util.Optional;
 
@@ -16,8 +18,11 @@ public class BoardService {
 
     private BoardRepository boardRepository;
 
-    public Page<Board> findAll(Pageable pageable){
-        return boardRepository.findAll(pageable);
+    public Page<Board> findAll(Criteria cri){
+
+        PageRequest pageRequest = PageRequest.of(cri.getPageNum(), cri.getAmount(), Sort.by("bno").descending());
+
+        return boardRepository.findAll(pageRequest);
     }
 
     public Optional<Board> findBoard(Long bno){

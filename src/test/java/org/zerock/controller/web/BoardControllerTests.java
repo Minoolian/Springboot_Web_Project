@@ -57,7 +57,7 @@ public class BoardControllerTests {
 
         log.info("=============MVC TEST START=====================");
 
-        mockMvc.perform(get("/board/list"))
+        mockMvc.perform(get("/board/list").param("pageNum","2").param("amount","3"))
                 .andExpect(status().isOk())
                 .andDo(print());
 

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.controller.domain.board.Board;
 import org.zerock.controller.dto.board.Criteria;
+import org.zerock.controller.dto.board.PageDTO;
 import org.zerock.controller.service.BoardService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +29,7 @@ public class BoardController {
     //@RequestParam(value="pageNum") Integer pageNum, @RequestParam(value="amount") Integer amount
     public String list(Criteria cri, Model model) {
         model.addAttribute("list", boardService.findAll(cri).getContent());
+        model.addAttribute("pageMaker", new PageDTO(cri,123));
         log.info("amount : "+cri.getAmount() + ", pageNum : "+cri.getPageNum());
         return "list";
     }

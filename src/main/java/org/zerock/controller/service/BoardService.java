@@ -20,7 +20,7 @@ public class BoardService {
 
     public Page<Board> findAll(Criteria cri){
 
-        PageRequest pageRequest = PageRequest.of(cri.getPageNum(), cri.getAmount(), Sort.by("bno").descending());
+        PageRequest pageRequest = PageRequest.of(cri.getPageNum()-1, cri.getAmount(), Sort.by("bno").descending());
 
         return boardRepository.findAll(pageRequest);
     }

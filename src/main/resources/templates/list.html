@@ -378,7 +378,7 @@
                                 <tbody>
                                         <tr th:each="board:${list}">
                                             <td th:text="${board.bno}"></td>
-                                            <td><a th:href="@{/board/get(bno=${board.bno})}" th:text="${board.title}"></a></td>
+                                            <td><a class="move" th:href="${board.bno}" th:text="${board.title}"></a></td>
                                             <td th:text="${board.writer}"></td>
                                             <td th:text="${#temporals.format(board.createDate, 'yy-MM-dd')}"></td>
                                             <td th:text="${#temporals.format(board.modifiedDate, 'yy-MM-dd')}"></td>
@@ -479,6 +479,14 @@
                 actionForm.submit();
 
             });
+
+            $(".move").on("click", function (e){
+                e.preventDefault();
+
+                actionForm.append("<input type='hidden' name='bno' value='"+$(this).attr("href")+"'>");
+                actionForm.attr("action", "/board/get");
+                actionForm.submit();
+            })
 
 
 

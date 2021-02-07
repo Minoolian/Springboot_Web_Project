@@ -89,4 +89,19 @@ public class BoardServiceTests {
 
         assertThat(boardService.deleteBoard(1L)).isEqualTo(1);
     }
+
+    @Test
+    public void countTest(){
+        for(int i=1; i<10; i++) {
+            boardService.saveBoard(
+                    Board.builder()
+                            .title("Test Title" + i)
+                            .content("Test Content")
+                            .writer("Test Writer")
+                            .build()
+            );
+        }
+
+        log.info(""+boardService.getTotal());
+    }
 }

@@ -26,7 +26,10 @@ public class BoardController {
     //@RequestParam(value="pageNum") Integer pageNum, @RequestParam(value="amount") Integer amount
     public String list(Criteria cri, Model model) {
         model.addAttribute("list", boardService.findAll(cri).getContent());
-        model.addAttribute("pageMaker", new PageDTO(cri,123));
+
+        int total=boardService.getTotal();
+
+        model.addAttribute("pageMaker", new PageDTO(cri,total));
         log.info("amount : "+cri.getAmount() + ", pageNum : "+cri.getPageNum());
         return "list";
     }
@@ -64,18 +67,26 @@ public class BoardController {
     }
 
     @PostMapping("/modify")
-    public String modify(Board board, RedirectAttributes rttr) {
+    public String modify(Board board, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
         if (boardService.updateBoard(board)) {
             rttr.addFlashAttribute("result", "success");
         }
+
+        rttr.addAttribute("pageNum",cri.getPageNum());
+        rttr.addAttribute("amount", cri.getAmount());
+
         return "redirect:/board/list";
     }
 
     @PostMapping("/remove")
-    public String remove(@RequestParam("bno") Long bno, RedirectAttributes rttr) {
+    public String remove(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
         if (boardService.deleteBoard(bno)) {
             rttr.addFlashAttribute("result", "success");
         }
+
+        rttr.addAttribute("pageNum",cri.getPageNum());
+        rttr.addAttribute("amount", cri.getAmount());
+
         return "redirect:/board/list";
     }
 }

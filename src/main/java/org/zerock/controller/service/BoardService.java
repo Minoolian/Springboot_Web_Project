@@ -54,4 +54,9 @@ public class BoardService {
         }
 
     }
+
+    public int getTotal(){
+
+        return (int)boardRepository.count();
+    }
 }

@@ -8,8 +8,11 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.zerock.controller.domain.board.Board;
 import org.zerock.controller.domain.board.BoardRepository;
+import org.zerock.controller.dto.board.BoardSpecs;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
@@ -91,17 +94,32 @@ public class BoardRepositoryTests {
 
     @Test
     public void BoardFindAllTest(){
-        boardRepository.save(
-                Board.builder()
-                        .title("테스트게시글")
-                        .content("테스트본문")
-                        .writer("minoolian")
-                        .build()
-        );
+        int[] a={1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        for(int v:a) {
+            boardRepository.save(Board.builder()
+                    .title("테스트게시글" + v)
+                    .content("테스트본문" + (v+1))
+                    .writer("minoolian")
+                    .build());
+        }
 
-        List<Board> board=boardRepository.findAll();
+        Map<String, Object> map=new HashMap<>();
 
-        board.forEach(a-> log.info("result="+a));
+        map.put("title", "3");
+        map.put("content", "3");
+//        map.put("c", "content");
+
+
+        List<Board> board=boardRepository.findAll(BoardSpecs.searchWith(map));
+
+        for(Board b:board){
+            log.info(b.getTitle());
+            log.info(b.getContent());
+            log.info(b.getWriter());
+        }
+
+
+
 
     }
 }

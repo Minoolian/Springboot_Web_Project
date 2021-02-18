@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 
 @RunWith(SpringRunner.class)
@@ -26,6 +26,7 @@ public class BoardRepositoryTests {
 
     @Autowired
     private BoardRepository boardRepository;
+
 
     @Test
     public void BoardSaveTest() {
@@ -103,10 +104,11 @@ public class BoardRepositoryTests {
                     .build());
         }
 
+
         Map<String, Object> map=new HashMap<>();
 
-        map.put("title", "3");
-        map.put("content", "3");
+//        map.put("title", "3");
+//        map.put("content", "3");
 //        map.put("c", "content");
 
 

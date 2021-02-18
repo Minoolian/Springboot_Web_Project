@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.zerock.controller.domain.board.Board;
 import org.zerock.controller.domain.board.BoardRepository;
+import org.zerock.controller.dto.board.BoardSpecs;
 import org.zerock.controller.dto.board.Criteria;
 
 import java.util.Optional;
@@ -22,7 +23,7 @@ public class BoardService {
 
         PageRequest pageRequest = PageRequest.of(cri.getPageNum()-1, cri.getAmount(), Sort.by("bno").descending());
 
-        return boardRepository.findAll(pageRequest);
+        return cri.getTypeArr().isEmpty() ? boardRepository.findAll(pageRequest) : boardRepository.findAll(BoardSpecs.searchWith(cri.getTypeArr()),pageRequest);
     }
 
     public Optional<Board> findBoard(Long bno){

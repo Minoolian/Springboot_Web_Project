@@ -5,6 +5,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.zerock.controller.domain.BaseTimeEntity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter @Setter
@@ -24,6 +25,10 @@ public class Board extends BaseTimeEntity {
     private String content;
 
     private String writer;
+
+    @OneToMany
+    @JoinColumn
+    private List<Reply> replies;
 
     @Builder
     public Board(String title, String content, String writer){

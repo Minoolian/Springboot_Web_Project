@@ -5,6 +5,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.zerock.controller.domain.BaseTimeEntity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -16,7 +17,7 @@ public class Board extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long bno;
+    private Long bno;
 
     @Column(length = 255)
     private String title;
@@ -26,9 +27,8 @@ public class Board extends BaseTimeEntity {
 
     private String writer;
 
-    @OneToMany
-    @JoinColumn
-    private List<Reply> replies;
+    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER)
+    private List<Reply> replies=new ArrayList<>();
 
     @Builder
     public Board(String title, String content, String writer){

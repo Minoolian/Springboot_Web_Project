@@ -7,16 +7,19 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 import org.zerock.controller.domain.board.Board;
 import org.zerock.controller.domain.board.BoardRepository;
 import org.zerock.controller.domain.board.Reply;
 import org.zerock.controller.domain.board.ReplyRepository;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @Slf4j
+@Transactional
 public class ReplyRepositoryTests {
 
     private Long[] bnoArr={200L, 201L, 202L, 203L, 204L};
@@ -40,7 +43,7 @@ public class ReplyRepositoryTests {
 
         IntStream.rangeClosed(1, 10).forEach(i->{
             replyRepository.save(Reply.builder()
-                    .board(board)
+                    .board(boardRepository.findAll().get(0))
                     .reply("test reply"+i)
                     .replyer("test replyer"+i)
                     .build()
@@ -58,6 +61,7 @@ public class ReplyRepositoryTests {
     public void findTest(){
         Reply reply = replyRepository.findAll().get(0);
         Board board=reply.getBoard();
+
         log.info("first reply : "+reply.getReply());
 
         for(Reply r : board.getReplies()){
@@ -68,7 +72,8 @@ public class ReplyRepositoryTests {
 
 
     @Test
-    public void Test(){
-
+    public void Nplus1_Test(){
+        List<Board> boards=boardRepository.findAll();
+        log.info("size : "+boards.get(0).getReplies().size());
     }
 }

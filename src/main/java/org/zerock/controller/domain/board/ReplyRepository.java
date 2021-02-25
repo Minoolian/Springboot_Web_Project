@@ -11,4 +11,5 @@ public interface ReplyRepository extends JpaRepository<Reply, Long> {
 
     @Transactional
     int deleteByRno(Long rno);
+
 }

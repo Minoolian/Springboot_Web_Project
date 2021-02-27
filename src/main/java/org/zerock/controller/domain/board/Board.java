@@ -27,7 +27,7 @@ public class Board extends BaseTimeEntity {
 
     private String writer;
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "board")
     private List<Reply> replies=new ArrayList<>();
 
     @Builder

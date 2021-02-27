@@ -4,12 +4,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.zerock.controller.domain.board.Board;
 import org.zerock.controller.domain.board.BoardRepository;
 import org.zerock.controller.dto.board.BoardSpecs;
 
+import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,7 @@ import static org.junit.Assert.assertThat;
 
 
 @RunWith(SpringRunner.class)
-@DataJpaTest
+@SpringBootTest
 @Slf4j
 public class BoardRepositoryTests {
 
@@ -107,7 +108,7 @@ public class BoardRepositoryTests {
 
         Map<String, Object> map=new HashMap<>();
 
-//        map.put("title", "3");
+        map.put("title", "3");
 //        map.put("content", "3");
 //        map.put("c", "content");
 
@@ -120,8 +121,24 @@ public class BoardRepositoryTests {
             log.info(b.getWriter());
         }
 
+    }
 
+    @Test
+    @Transactional
+    public void nplus1_Test(){
+        int[] a={1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        for(int v:a) {
+            boardRepository.save(Board.builder()
+                    .title("테스트게시글" + v)
+                    .content("테스트본문" + (v+1))
+                    .writer("minoolian")
+                    .build());
+        }
 
+        List<Board> boards = boardRepository.findAll();
 
+        for(Board board : boards){
+            System.out.println(board.getReplies().size());
+        }
     }
 }

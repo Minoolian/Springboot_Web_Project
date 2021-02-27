@@ -31,6 +31,7 @@ public class ReplyRepositoryTests {
     private BoardRepository boardRepository;
 
     @Before
+    @Transactional
     public void insert(){
 
         Board board=Board.builder()
@@ -39,17 +40,34 @@ public class ReplyRepositoryTests {
                 .content("Test wirter")
                 .build();
 
+        Board board2=Board.builder()
+                .title("test title2")
+                .content("test contet2")
+                .content("Test wirter2")
+                .build();
+
         boardRepository.save(board);
+        boardRepository.save(board2);
 
         IntStream.rangeClosed(1, 10).forEach(i->{
-            replyRepository.save(Reply.builder()
-                    .board(boardRepository.findAll().get(0))
-                    .reply("test reply"+i)
-                    .replyer("test replyer"+i)
-                    .build()
-            );
-        });
+            if(i<6){
+                Reply build = Reply.builder()
+                        .board(board)
+                        .reply("test reply" + i)
+                        .replyer("test replyer" + i)
+                        .build();
 
+                replyRepository.save(build);
+            }else{
+                replyRepository.save(Reply.builder()
+                        .board(board2)
+                        .reply("test reply"+i)
+                        .replyer("test replyer"+i)
+                        .build()
+                );
+            }
+
+        });
     }
 
     @Test
@@ -74,6 +92,15 @@ public class ReplyRepositoryTests {
     @Test
     public void Nplus1_Test(){
         List<Board> boards=boardRepository.findAll();
-        log.info("size : "+boards.get(0).getReplies().size());
+        List<Reply> replies=replyRepository.findAll();
+
+        for(Reply reply : replies){
+            log.info(""+reply.getBoard().getTitle());
+        }
+
+        for(Board board : boards){
+            log.info(""+board.getReplies().size());
+        }
+
     }
 }

@@ -41,6 +41,22 @@ public class ReplyServiceTest {
         assertThat(replyService.get(1L).get().getReply(),is("test reply"));
         assertThat(replyService.get(1L).get().getBoard().getReplies().size(),is(1));
 
+    }
+
+    @Test
+    public void find(){
+        Board board = boardService.saveBoard(Board.builder().title("Test Title").build());
+
+        replyService.register(
+                Reply.builder()
+                        .replyer("test REplyer")
+                        .reply("test reply")
+                        .board(board)
+                        .build()
+        );
+
+        assertThat(replyService.getList(1L).get(0).getReply(), is("test reply"));
+
 
     }
 

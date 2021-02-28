@@ -18,7 +18,7 @@ public class Reply extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rno;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="bno")
     private Board board;
 
@@ -30,7 +30,7 @@ public class Reply extends BaseTimeEntity {
         this.reply=reply;
         this.replyer=replyer;
         this.board=board;
-        board.getReplies().add(this);
+        this.board.getReplies().add(this);
 
     }
 

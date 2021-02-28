@@ -2,6 +2,7 @@ package org.zerock.controller.domain.board;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,5 +17,8 @@ public interface BoardRepository extends JpaRepository<Board, Long>, JpaSpecific
     // custom delete에는 @Transactional 어노테이션 부여
 
     List<Board> findByTitleContainingOrWriterContaining(String title, String content);
+
+    @Query(value="select DISTINCT c from Board c left join fetch c.replies")
+    List<Board> findAllWithFetch();
 
 }

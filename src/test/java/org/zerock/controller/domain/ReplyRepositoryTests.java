@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 import org.zerock.controller.domain.board.Board;
@@ -14,40 +14,36 @@ import org.zerock.controller.domain.board.Reply;
 import org.zerock.controller.domain.board.ReplyRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @RunWith(SpringRunner.class)
-@DataJpaTest
+@SpringBootTest
 @Slf4j
-@Transactional
 public class ReplyRepositoryTests {
 
-    private Long[] bnoArr={200L, 201L, 202L, 203L, 204L};
+    @Autowired
+    ReplyRepository replyRepository;
 
     @Autowired
-    private ReplyRepository replyRepository;
-
-    @Autowired
-    private BoardRepository boardRepository;
+    BoardRepository boardRepository;
 
     @Before
     @Transactional
     public void insert(){
 
-        Board board=Board.builder()
-                .title("test title")
-                .content("test contet")
-                .content("Test wirter")
-                .build();
+        Board board = boardRepository.save(Board.builder()
+        .title("test title")
+        .content("test contet")
+        .writer("Test wirter")
+        .build());
 
-        Board board2=Board.builder()
+
+        Board board2 = boardRepository.save(Board.builder()
                 .title("test title2")
                 .content("test contet2")
-                .content("Test wirter2")
-                .build();
-
-        boardRepository.save(board);
-        boardRepository.save(board2);
+                .writer("Test wirter2")
+                .build());
 
         IntStream.rangeClosed(1, 10).forEach(i->{
             if(i<6){
@@ -90,17 +86,23 @@ public class ReplyRepositoryTests {
 
 
     @Test
+    @Transactional
     public void Nplus1_Test(){
-        List<Board> boards=boardRepository.findAll();
-        List<Reply> replies=replyRepository.findAll();
 
-        for(Reply reply : replies){
-            log.info(""+reply.getBoard().getTitle());
-        }
+        List<Board> boards=boardRepository.findAllWithFetch();
+//        List<Reply> replies=replyRepository.findAll();
 
-        for(Board board : boards){
-            log.info(""+board.getReplies().size());
-        }
+
+//        for(Reply r:replies){
+//            System.out.println(r.getBoard().getContent());
+//        }
+
+        List<String> collect = boards.stream()
+                .map(board -> board.getReplies().get(0).getReply())
+                .collect(Collectors.toList());
+
 
     }
+
+
 }

@@ -1,5 +1,6 @@
 package org.zerock.controller.domain.board;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -20,5 +21,9 @@ public interface BoardRepository extends JpaRepository<Board, Long>, JpaSpecific
 
     @Query(value="select DISTINCT c from Board c left join fetch c.replies")
     List<Board> findAllWithFetch();
+
+    @EntityGraph(attributePaths = "replies")
+    @Query("select b from Board b")
+    List<Board> findAllWithEntityGraph();
 
 }

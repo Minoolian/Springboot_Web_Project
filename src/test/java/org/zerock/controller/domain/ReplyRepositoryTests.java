@@ -89,8 +89,8 @@ public class ReplyRepositoryTests {
     @Transactional
     public void Nplus1_Test(){
 
-//        List<Board> boards=boardRepository.findAllWithFetch();
-        List<Board> boards=boardRepository.findAllWithEntityGraph();
+        List<Board> boards=boardRepository.findAllWithFetch();
+//        List<Board> boards=boardRepository.findAllWithEntityGraph();
 //        List<Reply> replies=replyRepository.findAll();
 
 

@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.zerock.controller.domain.board.Board;
 import org.zerock.controller.domain.board.BoardRepository;
+import org.zerock.controller.domain.board.BoardRepositorySupport;
 import org.zerock.controller.dto.board.BoardSpecs;
 
 import javax.transaction.Transactional;
@@ -27,6 +28,9 @@ public class BoardRepositoryTests {
 
     @Autowired
     private BoardRepository boardRepository;
+
+    @Autowired
+    private BoardRepositorySupport boardRepositorySupport;
 
 
     @Test
@@ -140,5 +144,22 @@ public class BoardRepositoryTests {
         for(Board board : boards){
             System.out.println(board.getReplies().size());
         }
+    }
+
+    @Test
+    public void querydslTests(){
+        int[] a={1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        for(int v:a) {
+            boardRepository.save(Board.builder()
+                    .title("테스트게시글" + v)
+                    .content("테스트본문" + (v+1))
+                    .writer("minoolian")
+                    .build());
+        }
+
+        List<Board> boards = boardRepositorySupport.findByTitle("테스트게시글4");
+
+        assertThat(boards.size(), is(1));
+        assertThat(boards.get(0).getContent(), is("테스트본문5"));
     }
 }

@@ -23,4 +23,14 @@ public class BoardRepositorySupport extends QuerydslRepositorySupport {
                 .where(board.title.eq(title))
                 .fetch();
     }
+
+    public List<Board> findByleftJoinBoards(){
+        QReply reply = QReply.reply1;
+        QBoard board = QBoard.board;
+        return from(board)
+                .distinct()
+                .leftJoin(board.replies, reply).fetchJoin()
+                .orderBy(board.bno.asc(), reply.rno.asc())
+                .fetch();
+    }
 }

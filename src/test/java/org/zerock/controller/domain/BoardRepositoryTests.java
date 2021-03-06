@@ -157,9 +157,12 @@ public class BoardRepositoryTests {
                     .build());
         }
 
-        List<Board> boards = boardRepositorySupport.findByTitle("테스트게시글4");
+//        List<Board> boards = boardRepositorySupport.findByTitle("테스트게시글4");
+//
+//        assertThat(boards.size(), is(1));
+//        assertThat(boards.get(0).getContent(), is("테스트본문5"));
 
-        assertThat(boards.size(), is(1));
-        assertThat(boards.get(0).getContent(), is("테스트본문5"));
+        List<Board> boards1 = boardRepository.findAll();
+        List<Board> boards = boardRepositorySupport.findByleftJoinBoards();
     }
 }

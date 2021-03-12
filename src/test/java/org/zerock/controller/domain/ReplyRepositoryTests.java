@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
-import org.zerock.controller.domain.board.Board;
-import org.zerock.controller.domain.board.BoardRepository;
-import org.zerock.controller.domain.board.Reply;
-import org.zerock.controller.domain.board.ReplyRepository;
+import org.zerock.controller.domain.board.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,6 +24,9 @@ public class ReplyRepositoryTests {
 
     @Autowired
     BoardRepository boardRepository;
+
+    @Autowired
+    ReplyRepositorySupport support;
 
     @Before
     @Transactional
@@ -102,6 +102,18 @@ public class ReplyRepositoryTests {
                 .map(board -> board.getReplies().get(0).getReply())
                 .collect(Collectors.toList());
 
+
+    }
+
+    @Test
+    public void queryDslTest(){
+
+//        List<Reply> replies = support.findReplyByBoard(2L);
+//
+//        assertThat(replies.size(), is(2));
+//        for(Reply r : replies){
+//            log.info(r.getRno() + " " + r.getReply() + " " + r.getReplyer());
+//        }
 
     }
 

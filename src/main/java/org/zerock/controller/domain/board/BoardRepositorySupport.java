@@ -33,4 +33,5 @@ public class BoardRepositorySupport extends QuerydslRepositorySupport {
                 .orderBy(board.bno.asc(), reply.rno.asc())
                 .fetch();
     }
+
 }

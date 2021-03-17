@@ -403,7 +403,41 @@
     </div>
     <!-- /#wrapper -->
 
+    <script type="text/javascript" src="/js/reply.js"></script>
     <script th:inline="javascript">
+        /* <![CDATA[ */
+        console.log("JS TEST")
+
+        var bnoValue=/*[[${board}]]*/;
+
+        replyService().add(
+            {reply:"JS TEST", replyer:"tester", board:bnoValue},
+            function (result){
+                alert("RESULT: "+result);
+            }
+        );
+        /* ]]> */
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function (){
+
+            var openForm=$("#openForm");
+
+            $("button[data-oper='modify']").on("click",function(e){
+                openForm.attr("action", "/board/modify").submit();
+            });
+
+            $("button[data-oper='list']").on("click",function(e){
+                openForm.find("#bno").remove();
+                openForm.attr("action", "/board/list");
+                openForm.submit();
+            });
+
+        });
+    </script>
+
+    <!--    <script th:inline="javascript">
         /* <![CDATA[ */
         $(document).ready(function (){
 
@@ -421,8 +455,7 @@
 
         });
 
-        /* ]]> */
-    </script>
+        /* ]]> */-->
 </th:block>
 </body>
 </html>

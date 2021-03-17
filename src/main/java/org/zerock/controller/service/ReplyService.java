@@ -1,11 +1,13 @@
 package org.zerock.controller.service;
 
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.zerock.controller.domain.board.Board;
-import org.zerock.controller.domain.board.BoardRepository;
 import org.zerock.controller.domain.board.Reply;
 import org.zerock.controller.domain.board.ReplyRepository;
+import org.zerock.controller.domain.board.ReplyRepositorySupport;
+import org.zerock.controller.dto.board.Criteria;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -17,7 +19,7 @@ import java.util.Optional;
 public class ReplyService {
 
     private ReplyRepository replyRepository;
-    private BoardRepository boardRepository;
+    private ReplyRepositorySupport support;
 
     public Long register(Reply reply){
         Reply save = replyRepository.save(reply);
@@ -28,11 +30,13 @@ public class ReplyService {
         return replyRepository.findById(rno);
     }
 
-    public List<Reply> getList(Long bno){
+    public List<Reply> getList(Long bno, Criteria cri){
 
-        Optional<Board> thatBoard = boardRepository.findById(bno);
+        PageRequest pageRequest = PageRequest.of(cri.getPageNum()-1, cri.getAmount(), Sort.by("rno").descending());
 
-        return thatBoard.get().getReplies();
+        List<Reply> replyByBoard = support.findReplyByBoard(bno, pageRequest);
+
+        return replyByBoard;
 
     }
 

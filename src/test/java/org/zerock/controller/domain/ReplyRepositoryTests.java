@@ -108,7 +108,8 @@ public class ReplyRepositoryTests {
     @Test
     public void queryDslTest(){
 
-//        List<Reply> replies = support.findReplyByBoard(2L);
+//        Criteria cri=new Criteria();
+//        List<Reply> replies = support.findReplyByBoard(13L);
 //
 //        assertThat(replies.size(), is(2));
 //        for(Reply r : replies){

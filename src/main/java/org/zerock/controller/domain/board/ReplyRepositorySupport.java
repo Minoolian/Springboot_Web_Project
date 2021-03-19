@@ -25,7 +25,7 @@ public class ReplyRepositorySupport extends QuerydslRepositorySupport {
                 .innerJoin(reply1.board, board).fetchJoin()
                 .where(board.bno.eq(bno))
                 .limit(pageable.getPageSize())
-                .offset(pageable.getPageNumber())
+                .offset(pageable.getOffset())
                 .fetch();
     }
 }

@@ -29,8 +29,8 @@ public class ReplyRestController {
 
     }
 
-    @GetMapping(value="/pages/{bno}/{page}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<List<Reply>> List(@PathVariable("page") Integer page, @PathVariable("bno") Long bno){
+    @GetMapping(value="/pages/{bno}/{page}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<List<Reply>> List(@PathVariable("page") int page, @PathVariable("bno") Long bno){
         Criteria cri=new Criteria(page, 10);
         return new ResponseEntity<>(service.getList(bno, cri),HttpStatus.OK);
     }

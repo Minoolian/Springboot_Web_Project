@@ -45,4 +45,4 @@ var replyService=(function (){
         add:add,
         getList:getList
     };
-})
+})();

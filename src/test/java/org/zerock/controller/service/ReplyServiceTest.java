@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.zerock.controller.domain.board.Board;
 import org.zerock.controller.domain.board.Reply;
+import org.zerock.controller.dto.board.Criteria;
 
 import javax.transaction.Transactional;
 
@@ -55,7 +56,10 @@ public class ReplyServiceTest {
                         .build()
         );
 
-        assertThat(replyService.getList(1L).get(0).getReply(), is("test reply"));
+        Criteria cri=new Criteria(1, 10);
+
+        assertThat(replyService.getList(1L, cri).get(0).getReply(), is("test reply"));
+        log.info(replyService.getList(1L,cri).size()+"");
 
 
     }

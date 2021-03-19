@@ -417,10 +417,11 @@
             }
         );*/
 
-        replyService().getList({bno:getboard, page:1}, function(list){
+
+        replyService.getList({page:1, bno:getboard}, function(list){
 
             for(var i=0, len=list.length||0; i<len; i++){
-                console(list[i]);
+                console.log(list[i]);
             }
         });
         /* ]]> */

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.zerock.controller.domain.board.Reply;
 import org.zerock.controller.dto.board.Criteria;
+import org.zerock.controller.dto.board.ReplyDTO;
 import org.zerock.controller.service.ReplyService;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public class ReplyRestController {
     }
 
     @GetMapping(value="/pages/{bno}/{page}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<List<Reply>> List(@PathVariable("page") int page, @PathVariable("bno") Long bno){
+    public ResponseEntity<List<ReplyDTO>> List(@PathVariable("page") int page, @PathVariable("bno") Long bno){
         Criteria cri=new Criteria(page, 10);
         return new ResponseEntity<>(service.getList(bno, cri),HttpStatus.OK);
     }

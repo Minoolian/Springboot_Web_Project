@@ -50,7 +50,9 @@ public class ReplyService {
 
         if(r.isPresent()){
             r.get().setReply(reply.getReply());
-            r.get().setReplyer(reply.getReplyer());
+            if(!reply.getReplyer().isEmpty()) {
+                r.get().setReplyer(reply.getReplyer());
+            }
 
             return true;
         }else{

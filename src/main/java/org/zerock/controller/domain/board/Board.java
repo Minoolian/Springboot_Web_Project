@@ -1,5 +1,6 @@
 package org.zerock.controller.domain.board;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 import org.zerock.controller.domain.BaseTimeEntity;
@@ -27,6 +28,7 @@ public class Board extends BaseTimeEntity {
 
     private String writer;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "board", fetch = FetchType.EAGER)
     private List<Reply> replies=new ArrayList<>();
 

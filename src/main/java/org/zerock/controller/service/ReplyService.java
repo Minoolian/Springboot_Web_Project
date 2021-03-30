@@ -9,6 +9,7 @@ import org.zerock.controller.domain.board.ReplyRepository;
 import org.zerock.controller.domain.board.ReplyRepositorySupport;
 import org.zerock.controller.dto.board.Criteria;
 import org.zerock.controller.dto.board.ReplyDTO;
+import org.zerock.controller.dto.board.ReplyPageDTO;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -28,8 +29,9 @@ public class ReplyService {
         return save.getRno();
     }
 
-    public Optional<Reply> get(Long rno){
-        return replyRepository.findById(rno);
+    public Reply get(Long rno){
+
+        return replyRepository.findById(rno).get();
     }
 
     public List<ReplyDTO> getList(Long bno, Criteria cri){
@@ -41,6 +43,16 @@ public class ReplyService {
         return replyByBoard.stream()
                 .map(o -> new ReplyDTO(o))
                 .collect(Collectors.toList());
+
+    }
+
+    public ReplyPageDTO getListPage(Long bno, Criteria cri){
+
+        PageRequest pageRequest = PageRequest.of(cri.getPageNum()-1, cri.getAmount(), Sort.by("rno").ascending());
+
+        ReplyPageDTO result = support.findReplyByBoardNew(bno, pageRequest);
+
+        return result;
 
     }
 

@@ -39,8 +39,8 @@ public class ReplyServiceTest {
                 .build()
         );
 
-        assertThat(replyService.get(1L).get().getReply(),is("test reply"));
-        assertThat(replyService.get(1L).get().getBoard().getReplies().size(),is(1));
+        assertThat(replyService.get(1L).getReply(),is("test reply"));
+        assertThat(replyService.get(1L).getBoard().getReplies().size(),is(1));
 
     }
 
@@ -61,8 +61,22 @@ public class ReplyServiceTest {
         assertThat(replyService.getList(1L, cri).get(0).getReply(), is("test reply"));
         log.info(replyService.getList(1L,cri).size()+"");
 
-
     }
 
+
+    @Test
+    public void get(){
+        Board board = boardService.saveBoard(Board.builder().title("Test Title").build());
+
+        replyService.register(
+                Reply.builder()
+                        .replyer("test REplyer")
+                        .reply("test reply")
+                        .board(board)
+                        .build()
+        );
+
+        assertThat(replyService.get(1L).getReply(), is("test reply"));
+    }
 
 }

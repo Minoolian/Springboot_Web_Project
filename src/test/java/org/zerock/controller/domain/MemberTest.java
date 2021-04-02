@@ -10,8 +10,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 import org.zerock.controller.domain.board.Member;
 import org.zerock.controller.domain.board.MemberRepo;
-import org.zerock.controller.domain.board.Team;
-import org.zerock.controller.domain.board.TeamRepo;
 
 import java.util.List;
 

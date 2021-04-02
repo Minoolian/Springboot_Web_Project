@@ -10,21 +10,14 @@ import javax.persistence.*;
 @Getter @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DynamicUpdate
+@Table(name="tbl_member")
 public class Member extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue
-    private Long id;
-    private String name;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String userid;
 
-    @ManyToOne
-    @JoinColumn(name="team_id")
-    private Team team;
+    private String userpw;
+    private String username;
 
-    @Builder
-    public Member(String name, Team team){
-        this.name=name;
-        this.team=team;
-        team.getMembers().add(this);
-    }
 }

@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -16,8 +17,9 @@ import javax.persistence.Table;
 @DynamicUpdate
 @Table(name="tbl_member_auth")
 public class MemberAuth {
-    
-    private String userid;
+
+    @OneToOne(mappedBy = "userid")
+    private Member member;
 
     private String auth;
 }

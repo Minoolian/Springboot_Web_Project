@@ -14,12 +14,13 @@ import javax.persistence.*;
 public class Member extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @OneToOne
-    @JoinColumn(name="userid")
     private String userid;
 
     private String userpw;
     private String username;
+
+    @OneToOne
+    @JoinColumn(name="authid")
+    private MemberAuth memberAuth;
 
 }

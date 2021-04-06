@@ -6,9 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -18,8 +16,9 @@ import javax.persistence.Table;
 @Table(name="tbl_member_auth")
 public class MemberAuth {
 
-    @OneToOne(mappedBy = "userid")
-    private Member member;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long authid;
 
     private String auth;
 }

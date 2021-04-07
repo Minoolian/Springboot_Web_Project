@@ -22,19 +22,13 @@ public class QMember extends EntityPathBase<Member> {
 
     public static final QMember member = new QMember("member1");
 
-    public final org.zerock.controller.domain.QBaseTimeEntity _super = new org.zerock.controller.domain.QBaseTimeEntity(this);
+    public final QMemberAuth memberAuth;
 
-    //inherited
-    public final DateTimePath<java.time.LocalDateTime> createDate = _super.createDate;
+    public final StringPath userid = createString("userid");
 
-    public final NumberPath<Long> id = createNumber("id", Long.class);
+    public final StringPath username = createString("username");
 
-    //inherited
-    public final DateTimePath<java.time.LocalDateTime> modifiedDate = _super.modifiedDate;
-
-    public final StringPath name = createString("name");
-
-    public final QTeam team;
+    public final StringPath userpw = createString("userpw");
 
     public QMember(String variable) {
         this(Member.class, forVariable(variable), INITS);
@@ -54,7 +48,7 @@ public class QMember extends EntityPathBase<Member> {
 
     public QMember(Class<? extends Member> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.team = inits.isInitialized("team") ? new QTeam(forProperty("team")) : null;
+        this.memberAuth = inits.isInitialized("memberAuth") ? new QMemberAuth(forProperty("memberAuth")) : null;
     }
 
 }

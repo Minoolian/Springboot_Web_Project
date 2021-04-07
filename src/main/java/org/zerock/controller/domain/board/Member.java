@@ -1,8 +1,10 @@
 package org.zerock.controller.domain.board;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
-import org.zerock.controller.domain.BaseTimeEntity;
 
 import javax.persistence.*;
 
@@ -11,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DynamicUpdate
 @Table(name="tbl_member")
-public class Member extends BaseTimeEntity {
+public class Member{
 
     @Id
     private String userid;

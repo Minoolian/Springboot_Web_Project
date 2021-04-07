@@ -1,33 +1,30 @@
 package org.zerock.controller.web;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.zerock.controller.domain.board.Member;
+import org.zerock.controller.service.MemberService;
 
-@RequestMapping("/sample/*")
 @Controller
 @Slf4j
 public class SampleController {
 
-    @GetMapping("/all")
-    public void doAll() {
+    @Autowired
+    private MemberService memberService;
 
-        log.info("do all can access every body");
-    }
-
-    @GetMapping("/member")
-    public void doMember() {
-
-        log.info("logined member");
+    @PostMapping("/signup")
+    public void signUp(Member member, @ModelAttribute("authid") Long authid) {
+        memberService.save(member, authid);
 
     }
 
-    @GetMapping("/admin")
-    public void doAdmin() {
-
-        log.info("admin only");
-
+    @GetMapping("/signup")
+    public String signUpView() {
+        return "signup";
     }
 }
 

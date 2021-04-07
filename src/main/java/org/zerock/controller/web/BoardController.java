@@ -2,6 +2,7 @@ package org.zerock.controller.web;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +36,7 @@ public class BoardController {
     }
 
     @PostMapping("/register")
+    @PreAuthorize("isAuthenticated()")
     public String register(Board board, RedirectAttributes rttr) {
         boardService.saveBoard(board);
         rttr.addFlashAttribute("result", board.getBno());
@@ -42,6 +44,7 @@ public class BoardController {
     }
 
     @GetMapping("/register")
+    @PreAuthorize("isAuthenticated()")
     public String register(){
         return "register";
     }

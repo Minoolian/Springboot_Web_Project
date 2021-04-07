@@ -1,23 +1,15 @@
 package org.zerock.controller.domain;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
-import org.zerock.controller.domain.board.Member;
-import org.zerock.controller.domain.board.MemberRepo;
-
-import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Slf4j
 public class MemberTest {
-    @Autowired
+/*    @Autowired
     MemberRepo memberRepo;
 
     @Autowired
@@ -85,6 +77,6 @@ public class MemberTest {
         for (Member member1 : all) {
             System.out.println(member1.getTeam().getName());
         }
-    }
+    }*/
 }
 

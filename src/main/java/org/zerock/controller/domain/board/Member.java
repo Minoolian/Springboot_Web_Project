@@ -1,9 +1,6 @@
 package org.zerock.controller.domain.board;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
@@ -24,5 +21,13 @@ public class Member{
     @OneToOne
     @JoinColumn(name="authid")
     private MemberAuth memberAuth;
+
+    @Builder
+    public Member(String userid, String userpw, String username) {
+        this.userid = userid;
+        this.userpw = userpw;
+        this.username = username;
+
+    }
 
 }

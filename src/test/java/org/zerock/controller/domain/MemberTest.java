@@ -1,17 +1,24 @@
 package org.zerock.controller.domain;
 
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.zerock.controller.domain.board.Member;
+import org.zerock.controller.domain.board.MemberRepo;
+
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Slf4j
 public class MemberTest {
-/*    @Autowired
+    @Autowired
     MemberRepo memberRepo;
-
+/*
     @Autowired
     TeamRepo teamRepo;
 
@@ -78,5 +85,15 @@ public class MemberTest {
             System.out.println(member1.getTeam().getName());
         }
     }*/
+
+    @Test
+    public void findtest(){
+        memberRepo.save(new Member("user", "user", "user11"));
+
+        Member user1 = memberRepo.findById("user").get();
+
+        assertThat(user1.getUsername(), is("user11"));
+
+    }
 }
 

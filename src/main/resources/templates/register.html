@@ -228,7 +228,7 @@
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="customlogin.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -333,7 +333,7 @@
                                     <a href="blank.html">Blank Page</a>
                                 </li>
                                 <li>
-                                    <a href="customlogin.html">Login Page</a>
+                                    <a href="login.html">Login Page</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -363,6 +363,7 @@
                         <div class="panel-body">
 
                             <form role="form" action="/board/register" method="post">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                 <div class="form-group">
                                     <label>Title</label> <input class="form-control" name='title'>
                                 </div>
@@ -373,7 +374,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Writer</label> <input class="form-control" name='writer'>
+                                    <label>Writer</label> <input class="form-control" name='writer' value='<sec:authentication property="principal.username"/>' readonly="readonly">
                                 </div>
                                 <button type="submit" class="btn btn-default">Submit
                                     Button</button>

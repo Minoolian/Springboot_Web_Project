@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.zerock.controller.service.MemberService;
 
@@ -23,7 +24,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private MemberService memberService;
 
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder(){
+    public PasswordEncoder bCryptPasswordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
@@ -39,14 +40,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests()
-                .antMatchers("/sample/member").authenticated()
-                .antMatchers("/sample/admin").hasRole("ADMIN")
+        http.authorizeRequests()
+                /*.antMatchers("/sample/member").authenticated()
+                .antMatchers("/sample/admin").hasRole("ADMIN")*/
                 .anyRequest().permitAll()
             .and()
                 .formLogin()
-                .loginPage("/customlogin")
-                .successForwardUrl("/sample")
+                .loginPage("/login")
+                .successForwardUrl("/board/list")
                 .failureForwardUrl("/login")
                 .permitAll()
             .and()
@@ -56,6 +57,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true)
              .and()
                 .exceptionHandling()
-                .accessDeniedPage("/denied");
+                .accessDeniedPage("/accesserror");
     }
 }

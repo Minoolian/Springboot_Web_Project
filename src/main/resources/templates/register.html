@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default_layout}">
 <head>
     <title>SB Admin 2 - Bootstrap Admin Theme</title>
-
 </head>
 
 <body>
@@ -362,8 +362,7 @@
                         <!-- /.panel-heading -->
                         <div class="panel-body">
 
-                            <form role="form" action="/board/register" method="post">
-                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            <form role="form" th:action="@{/board/register}" method="post">
                                 <div class="form-group">
                                     <label>Title</label> <input class="form-control" name='title'>
                                 </div>
@@ -374,7 +373,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Writer</label> <input class="form-control" name='writer' value='<sec:authentication property="principal.username"/>' readonly="readonly">
+                                    <label>Writer</label> <input class="form-control" name='writer' value='<sec:authentication="principal.username"/>' readonly="readonly">
                                 </div>
                                 <button type="submit" class="btn btn-default">Submit
                                     Button</button>

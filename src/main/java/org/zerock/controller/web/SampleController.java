@@ -29,15 +29,16 @@ public class SampleController {
         return "signup";
     }
 
-    @GetMapping("/login")
-    public String login(String error, String logout, Model model) {
-        if (error != null) {
+    @GetMapping("/user/login")
+    public String login() {
+//        String error, String logout, Model model
+        /*if (error != null) {
             model.addAttribute("error", "Login error");
         }
 
         if (logout != null) {
             model.addAttribute("logout", "Logout!");
-        }
+        }*/
 
         return "login";
     }

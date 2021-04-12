@@ -1,5 +1,6 @@
 package org.zerock.controller.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class MemberService implements UserDetailsService {
 
     @Autowired
@@ -30,6 +32,8 @@ public class MemberService implements UserDetailsService {
     public UserDetails loadUserByUsername(String userid) throws UsernameNotFoundException {
         Optional<Member> memberEntityWrapper = memberRepo.findById(userid);
         Member memberEntity = memberEntityWrapper.orElse(null);
+
+        log.info("param : "+ userid + " find value : "+ memberEntity.getMemberAuth().getAuth());
 
         List<GrantedAuthority> authorities = new ArrayList<>();
 

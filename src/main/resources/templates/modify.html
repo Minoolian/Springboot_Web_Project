@@ -361,7 +361,7 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <form role="form" action="/board/modify" method="post">
+                            <form role="form" th:action="@{/board/modify}" method="post">
                                 <input type="hidden" name="pageNum" th:value="${cri.pageNum}">
                                 <input type="hidden" name="amount" th:value="${cri.amount}">
                                 <input type="hidden" name="type" th:value="${cri.type}">
@@ -391,8 +391,10 @@
                                 <div class="form-group">
                                     <label>UpdateDate</label> <input class="form-control" name='modifiedData' th:value="${board.modifiedDate}" readonly="readonly">
                                 </div>
-                            <button data-oper="modify" class="btn btn-default" th:onclick="'location.href=\'/board/modify?bno='+${board.bno}+'\''">Modify</button>
-                            <button data-oper="remove" class="btn btn-danger">Remove</button>
+                                <sec:authorize access="isAuthenticated()">
+                            <button th:if="${#authentication.principal.username eq board.writer}" data-oper="modify" class="btn btn-default" th:onclick="'location.href=\'/board/modify?bno='+${board.bno}+'\''">Modify</button>
+                            <button th:if="${#authentication.principal.username eq board.writer}" data-oper="remove" class="btn btn-danger">Remove</button>
+                                </sec:authorize>
                                 <button data-oper="list" class="btn btn-info" onclick="location.href='/board/list'">List</button>
                             </form>
                         </div>
@@ -427,7 +429,7 @@
                     formObj.attr("action", "/board/list").attr("method","get");
                     var pageNumTag = $("input[name='pageNum']").clone();
                     var amountTag = $("input[name='amount']").clone();
-                    var keywordTag = $("input[name='keyword']").clone();
+                    var keywordTag = $("input[name='keywosrd']").clone();
                     var typeTag = $("input[name='type']").clone();
 
                     formObj.empty();

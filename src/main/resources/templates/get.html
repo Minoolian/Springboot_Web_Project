@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default_layout}">
 <head>
@@ -378,7 +379,11 @@
                                 <div class="form-group">
                                     <label>Writer</label> <input class="form-control" name='writer' th:value="${board.writer}" readonly="readonly">
                                 </div>
-                                <button data-oper="modify" class="btn btn-default" th:onclick="'location.href=\'/board/modify?bno='+${board.bno}+'\''">Modify</button>
+
+                                <sec:authorize access="isAuthenticated()">
+                                    <button th:if="${#authentication.principal.username eq board.writer}" data-oper="modify" class="btn btn-default" th:onclick="'location.href=\'/board/modify?bno='+${board.bno}+'\''">Modify</button>
+                                </sec:authorize>
+
                                 <button data-oper="list" class="btn btn-info" onclick="location.href='/board/list'">List</button>
 
                             <form id="openForm" action="/board/modify" method="get">
@@ -404,7 +409,9 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-comments fa-fw"></i> Reply
+                            <sec:authorize access="isAuthenticated()">
                             <button id="addReplyBtn" class="btn btn-primary btn-xs pull-right">New Reply</button>
+                            </sec:authorize>
                         </div>
 
                         <!-- /.panel-heading -->

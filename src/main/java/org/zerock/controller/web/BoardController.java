@@ -49,6 +49,7 @@ public class BoardController {
         return "register";
     }
 
+
     @GetMapping({"/get", "/modify"})
     public String get(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, Model model, HttpServletRequest request) {
         Optional<Board> board=boardService.findBoard(bno);
@@ -69,6 +70,7 @@ public class BoardController {
 
     }
 
+    @PreAuthorize("principal.username==#board.writer")
     @PostMapping("/modify")
     public String modify(Board board, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
         if (boardService.updateBoard(board)) {
@@ -83,8 +85,9 @@ public class BoardController {
         return "redirect:/board/list" + cri.getListLink();
     }
 
+    @PreAuthorize("principal.username==#writer")
     @PostMapping("/remove")
-    public String remove(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
+    public String remove(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr, String writer) {
         if (boardService.deleteBoard(bno)) {
             rttr.addFlashAttribute("result", "success");
         }

@@ -5,12 +5,18 @@ var replyService=(function (){
     function add(reply, callback, error){
         console.log("add reply");
 
+        /*var csrfHeaderName = csrfHeaderName;
+        var csrfTokenValue = csrfTokenValue;*/
+
         $.ajax({
 
             type : 'post',
             url : '/replies/new',
             data : JSON.stringify(reply),
             contentType : "application/json; charset=utf-8",
+            /*beforeSend: function(xhr){
+                xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+            },*/
             success : function (result, status, xhr){
                 if(callback){
                     callback(result);

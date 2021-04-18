@@ -32,7 +32,8 @@ public class ReplyRestController {
 
     @GetMapping(value="/pages/{bno}/{page}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<ReplyPageDTO> List(@PathVariable("page") int page, @PathVariable("bno") Long bno){
-        Criteria cri=new Criteria(page, 10);
+
+        Criteria cri= page==-1 ? new Criteria() : new Criteria(page, 10);
 //        return new ResponseEntity<>(service.getList(bno, cri),HttpStatus.OK);
         return new ResponseEntity<>(service.getListPage(bno, cri),HttpStatus.OK);
     }
@@ -42,11 +43,13 @@ public class ReplyRestController {
         return new ResponseEntity<>(service.get(rno), HttpStatus.OK);
     }
 
+    @PreAuthorize("principal.username==#reply.replyer")
     @DeleteMapping(value="/{rno}", produces = {MediaType.TEXT_PLAIN_VALUE})
-    public ResponseEntity<String> remove(@PathVariable("rno") Long rno){
+    public ResponseEntity<String> remove(@RequestBody Reply reply, @PathVariable("rno") Long rno){
         return service.remove(rno)==true ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @PreAuthorize("principal.username==#reply.replyer")
     @RequestMapping(method = {RequestMethod.PATCH, RequestMethod.PUT}, value="/{rno}", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
     public ResponseEntity<String> modify(@RequestBody Reply reply, @PathVariable("rno") Long rno){
         return service.updateReply(reply, rno)==true ?

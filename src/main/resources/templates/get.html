@@ -230,8 +230,8 @@
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                        </li>
+                        <li sec:authorize="isAnonymous()"><a href="/user/login"><i class="fa fa-sign-out fa-fw"></i> Login</a></li>
+                        <li sec:authorize="isAuthenticated()"><a href="/user/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a></li>
                     </ul>
                     <!-- /.dropdown-user -->
                 </li>
@@ -504,7 +504,6 @@
             showList(1);
 
             function showList(page){
-
                 replyService.getList({bno:bnoValue, page: page||1}, function(replyCnt, list){
 
                     if (page == -1) {
@@ -513,6 +512,7 @@
                         showList(pageNum);
                         return;
                     }
+
                     var str = "";
                     if (list == null || list.length == 0) {
                         replyUL.html("");
@@ -550,8 +550,6 @@
 
             }
 
-
-
             var csrfHeaderName = $("meta[name='_csrf_header']").attr("content");
             var csrfTokenName = $("meta[name='_csrf']").attr("content");
 
@@ -587,6 +585,7 @@
                     modal.find("input").val("");
                     modal.modal("hide");
 
+                    console.log("실행")
                     showList(-1);
                 });
             });
@@ -598,7 +597,7 @@
                 replyService.get(rno, function (reply) {
 
                     modalInputReply.val(reply.reply);
-                    modalInputReplyer.val(reply.replyer);
+                    modalInputReplyer.val(reply.replyer).attr("readonly","readonly");
                     modalInputReplyDate.val(replyService.displayTime(reply.modifiedDate)).attr("readonly", "readonly");
                     modal.data("rno", reply.rno);
 
@@ -612,7 +611,21 @@
 
             modalModBtn.on("click",function (e){
 
-                var reply={rno:modal.data("rno"), reply:modalInputReply.val(), replyer:modalInputReplyer.val()};
+                var origin=modalInputReplyer.val();
+
+                var reply={rno:modal.data("rno"), reply:modalInputReply.val(), replyer:origin};
+
+                if(!replyer){
+                    alert("로그인 후 가능");
+                    modal.modal("hide");
+                    return;
+                }
+
+                if(replyer != origin){
+                    alert("작성자가 일치하지 않습니다.");
+                    modal.modal("hide");
+                    return;
+                }
 
                 replyService.update(reply, function (result){
                     alert(result);
@@ -625,7 +638,20 @@
 
                 var rno=modal.data("rno");
 
-                replyService.remove(rno, function (result){
+                if(!replyer){
+                    alert("로그인 후 삭제가능");
+                    modal.modal("hide");
+                    return;
+                }
+
+                var origin=modalInputReplyer.val();
+                if (replyer != origin) {
+                    alert("작성자가 일치하지 않습니다.");
+                    modal.modal("hide");
+                    return;
+                }
+
+                replyService.remove(rno, origin, function (result){
 
                     alert(result);
                     modal.modal("hide");

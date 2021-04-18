@@ -29,7 +29,7 @@ public class Board extends BaseTimeEntity {
     private String writer;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Reply> replies=new ArrayList<>();
 
     @Builder

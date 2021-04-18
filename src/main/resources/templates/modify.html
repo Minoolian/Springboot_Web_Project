@@ -392,8 +392,8 @@
                                 <div class="form-group">
                                     <label>UpdateDate</label> <input class="form-control" name='modifiedData' th:value="${board.modifiedDate}" readonly="readonly">
                                 </div>
-                                <button sec:authorize access="isAuthenticated()" th:if="${#authentication.principal.username eq board.writer}" data-oper="modify" class="btn btn-default" th:onclick="'location.href=\'/board/modify?bno='+${board.bno}+'\''">Modify</button>
-                                <button sec:authorize access="isAuthenticated()" th:if="${#authentication.principal.username eq board.writer}" data-oper="remove" class="btn btn-danger">Remove</button>
+                                <button sec:authorize="isAuthenticated()" th:if="${#authentication.principal.username eq board.writer}" data-oper="modify" class="btn btn-default" th:onclick="'location.href=\'/board/modify?bno='+${board.bno}+'\''">Modify</button>
+                                <button sec:authorize="isAuthenticated()" th:if="${#authentication.principal.username eq board.writer}" data-oper="remove" class="btn btn-danger">Remove</button>
                                 <button data-oper="list" class="btn btn-info" onclick="location.href='/board/list'">List</button>
                             </form>
                         </div>

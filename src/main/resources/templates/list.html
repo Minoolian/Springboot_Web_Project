@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default_layout}">
 <head>
@@ -229,7 +230,8 @@
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li sec:authorize="isAnonymous()"><a href="/user/login"><i class="fa fa-sign-out fa-fw"></i> Login</a></li>
+                        <li sec:authorize="isAuthenticated()"><a href="/user/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a></li>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
